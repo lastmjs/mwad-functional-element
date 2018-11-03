@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/lastmjs/mwad-functional-element#readme",
   "dependencies": {
-    "functional-element": "0.0.5"
+    "functional-element": "0.0.6"
   },
   "devDependencies": {
     "jsverify-es-module": "0.0.2",
