@@ -16,9 +16,7 @@
   },
   "homepage": "https://github.com/lastmjs/mwad-functional-element#readme",
   "dependencies": {
-    "functional-element": "0.0.2",
-    "graceful-fs": "4.1.11",
-    "lit-html": "^0.12.0",
+    "functional-element": "0.0.5",
     "zwitterion": "0.27.3"
   }
 }
