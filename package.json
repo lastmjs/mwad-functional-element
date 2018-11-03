@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "zwitterion",
-    "build": "zwitterion --build-static --exclude=node_modules"
+    "build": "zwitterion --build-static --exclude=node_modules --include=functional-element"
   },
   "repository": {
     "type": "git",
