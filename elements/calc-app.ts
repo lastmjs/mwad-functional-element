@@ -1,45 +1,69 @@
 import { html } from 'lit-html';
-import { functionalElement } from '../functional-element';
+import { customElement } from 'functional-element';
 import './calc-screen';
 import './calc-buttons';
 
-functionalElement('calc-app', calcApp);
+customElement('calc-app', calcApp);
 
-function calcApp({ props, update, constructing }) {
+function calcApp({ props, update, constructing, connecting }) {
+    if (!props.resizeListenerSet) {
+        window.addEventListener('resize', () => {
+            update();
+        });
+    }
+
     if (constructing) {
         return {
             props: {
-                screenValue: ''
+                screenValue: '',
+                resizeListenerSet: true
             }
         };
     }
 
+    const desktopScreen = window.matchMedia('(min-width: 1024px)').matches;
+
     return {
-        props,
         template: html`
-            <calc-screen .screenValue=${props.screenValue}></calc-screen>
-            <calc-buttons
-                @character=${(e) => update(addToScreen(props.screenValue, e.detail.character))}
-                @calculate=${() => update(calculate(props.screenValue))}
-            >
-            </calc-buttons>
+            <style>
+                .main-grid-container {
+                    display: grid;
+                    grid-template-rows: 1fr 9fr;
+                    width: ${desktopScreen ? '80%' : '100%'};
+                    height: ${desktopScreen ? '80%' : '100%'};
+                    padding-right: ${desktopScreen ? '10%' : '0'};
+                    padding-left: ${desktopScreen ? '10%' : '0'};
+                }
+            </style>
+
+            <div class="main-grid-container">
+                <calc-screen .screenValue=${props.screenValue}></calc-screen>
+                <calc-buttons
+                    @character=${(e) => update(addToScreen(props, e.detail.character))}
+                    @calculate=${() => update(calculate(props))}
+                    @clear=${() => update({ props: {...props, screenValue: ''} })}
+                >
+                </calc-buttons>
+            </div>
         `
     };
 }
 
-function addToScreen(screenValue, newValue) {
+function addToScreen(props, newValue) {
     return {
         props: {
-            screenValue: screenValue === 'Syntax error' ? newValue : `${screenValue}${newValue}`
+            ...props,
+            screenValue: props.screenValue === 'Syntax error' ? newValue : `${props.screenValue}${newValue}`
         }
     };
 }
 
-function calculate(screenValue) {
+function calculate(props) {
     try {
-        const result = eval(screenValue);
+        const result = eval(props.screenValue);
         return {
             props: {
+                ...props,
                 screenValue: result
             }
         };
@@ -47,6 +71,7 @@ function calculate(screenValue) {
     catch(error) {
         return {
             props: {
+                ...props,
                 screenValue: 'Syntax error'
             }
         };

@@ -1,7 +1,7 @@
 import { html } from 'lit-html';
-import { functionalElement } from '../functional-element';
+import { customElement } from 'functional-element';
 
-functionalElement('calc-screen', calcScreen);
+customElement('calc-screen', calcScreen);
 
 function calcScreen({ props, constructing }) {
     if (constructing) {
@@ -13,14 +13,13 @@ function calcScreen({ props, constructing }) {
     }
 
     return {
-        props,
         template: html`
             <style>
                 .screen {
-                    width: 500px;
-                    height: 50px;
                     border: solid 1px black;
                     text-align: right;
+                    font-size: calc(25px + 1vmin);
+                    height: 100%;
                 }
             </style>
 
