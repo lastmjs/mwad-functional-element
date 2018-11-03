@@ -28,7 +28,7 @@ function calcApp({ props, update, constructing, connecting }) {
             <style>
                 .main-grid-container {
                     display: grid;
-                    grid-template-rows: 1fr 9fr;
+                    grid-template-rows: 10% 90%;
                     width: ${desktopScreen ? '80%' : '100%'};
                     height: ${desktopScreen ? '80%' : '100%'};
                     padding-right: ${desktopScreen ? '10%' : '0'};
