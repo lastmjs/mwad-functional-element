@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/lastmjs/mwad-functional-element#readme",
   "dependencies": {
-    "functional-element": "0.0.6"
+    "functional-element": "0.0.9"
   },
   "devDependencies": {
     "jsverify-es-module": "0.0.2",
-    "zwitterion": "^0.27.3"
+    "zwitterion": "0.27.3"
   }
 }
