@@ -1,6 +1,6 @@
 import { html, customElement } from 'functional-element';
 
-customElement('calc-screen', ({ props, constructing }) => {
+customElement('calc-screen', ({ constructing, screenValue }) => {
     if (constructing) {
         return {
             screenValue: ''
@@ -17,6 +17,6 @@ customElement('calc-screen', ({ props, constructing }) => {
             }
         </style>
 
-        <div class="screen">${props.screenValue}</div>
+        <div class="screen">${screenValue}</div>
     `;
 });

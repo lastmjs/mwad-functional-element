@@ -1,6 +1,7 @@
 import { html, customElement } from 'functional-element';
 
-customElement('calc-button', ({ props, constructing }) => {
+customElement('calc-button', ({ constructing, text }) => {
+
     if (constructing) {
         return {
             text: ''
@@ -21,6 +22,6 @@ customElement('calc-button', ({ props, constructing }) => {
             }
         </style>
 
-        <div class="number-button">${props.text}</div>
+        <div class="number-button">${text}</div>
     `;
 });

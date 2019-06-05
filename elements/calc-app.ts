@@ -2,8 +2,8 @@ import { html, customElement } from 'functional-element';
 import './calc-screen';
 import './calc-buttons';
 
-customElement('calc-app', ({ props, update, constructing }) => {
-    if (!props.resizeListenerSet) {
+customElement('calc-app', ({ constructing, update, screenValue, resizeListenerSet }) => {
+    if (!resizeListenerSet) {
         window.addEventListener('resize', () => {
             update();
         });
@@ -31,35 +31,32 @@ customElement('calc-app', ({ props, update, constructing }) => {
         </style>
 
         <div class="main-grid-container">
-            <calc-screen .screenValue=${props.screenValue}></calc-screen>
+            <calc-screen .screenValue=${screenValue}></calc-screen>
             <calc-buttons
-                @character=${(e) => update(addToScreen(props, e.detail.character))}
-                @calculate=${() => update(calculate(props))}
-                @clear=${() => update({...props, screenValue: '' })}
+                @character=${(e) => update(addToScreen(screenValue, e.detail.character))}
+                @calculate=${() => update(calculate(screenValue))}
+                @clear=${() => update({ screenValue: '' })}
             >
             </calc-buttons>
         </div>
     `;
 });
 
-function addToScreen(props, newValue) {
+function addToScreen(screenValue, newValue) {
     return {
-        ...props,
-        screenValue: props.screenValue === 'Syntax error' ? newValue : `${props.screenValue}${newValue}`
+        screenValue: screenValue === 'Syntax error' ? newValue : `${screenValue}${newValue}`
     };
 }
 
-function calculate(props) {
+function calculate(screenValue) {
     try {
-        const result = eval(props.screenValue);
+        const result = eval(screenValue);
         return {
-            ...props,
             screenValue: result
         };
     }
     catch(error) {
         return {
-            ...props,
             screenValue: 'Syntax error'
         };
     }
